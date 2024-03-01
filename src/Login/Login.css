@@ -1,0 +1,9 @@
+form{
+    margin: 180px 450px;
+    text-align: center;
+    background-color: rgb(255, 0, 191);
+    padding: 100px;
+    font-style: italic;
+    font-weight: bolder;
+    /* border-radius: 10px; */
+}
