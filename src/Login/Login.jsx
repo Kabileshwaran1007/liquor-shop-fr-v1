@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-impor
+
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
@@ -60,8 +60,8 @@ export const Login = () => {
 
             <div className="outer">
                 <h1>Login Form</h1>
-                <h4>login in to get notified</h4>
-                <div>
+                {/* <h4>login in to get notified</h4> */}
+                <div >
                     <form onSubmit={handleSubmit}>
 
                         <p>Username : <input type="text" placeholder="Type your username" name="username" value={formData.username} onChange={handleChange} /></p>

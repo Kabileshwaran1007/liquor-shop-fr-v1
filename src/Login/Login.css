@@ -1,9 +1,11 @@
 form{
-    margin: 180px 450px;
+    margin: 150px 450px;
     text-align: center;
-    background-color: rgb(255, 0, 191);
+    /* background-color: rgb(167, 243, 230); */
+    background-image: linear-gradient(to left top, #13dcc1, #00b3b6, #008aa0, #006280, #003d5a, #073f5c, #0d415d, #13435f, #136d8b, #169ab3, #31cad6, #5ffbf1);
+    box-shadow: 5px beige;
     padding: 100px;
     font-style: italic;
     font-weight: bolder;
-    /* border-radius: 10px; */
+    border-radius: 15px 14px 13px ;
 }
