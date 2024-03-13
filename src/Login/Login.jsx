@@ -36,7 +36,7 @@ export const Login = () => {
                 if (response.status === 200) {
                     console.log("datareceived", response);
                     alert("singup seccessfully");
-                    navigate("/Home");
+                    navigate("/");
                 }
             }).catch(error => {
                 console.log("error", error);

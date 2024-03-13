@@ -1,6 +1,35 @@
 .Nav{
-    background-image: linear-gradient(to bottom, #5589fb, #4a7ff9, #3f75f7, #356bf5, #2b60f2);
+    background-image: linear-gradient(to bottom, #101011, #9a9b9c, #bcbdbe, #d9dbe0, #e2e2e9);
 }
 .me-auto{
     font-weight: 500;
+}
+.brand span{
+    font-family: Cursive;
+}
+.brand{
+    font-family: URW Chancery L, cursive;
+}
+.back{
+    background-image: url('../image/Background.jpg');
+    width: 100.8%;
+}
+.page-title{
+    margin-top: 20%;
+}
+.banner{
+    margin-top: 9%;
+    margin-left: 8%;
+}
+.beer{
+    margin-top: 5px;
+    margin-left: 45%;
+    
+    
+}
+.wine{
+    margin-left: 67%;
+}
+.whiskey{
+    margin-left: 65%;
 }

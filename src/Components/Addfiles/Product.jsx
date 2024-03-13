@@ -35,7 +35,7 @@ export const Product = () =>{
            Description : <input type="text" name="valDescription" value={data.value} onChange={dataGiven} /> <br></br>
            Price : <input type="text" name="valPrice" value={data.value} onChange={dataGiven} /> <br></br>
            <ImageUploader />
-           <input type="button" onClick={submitProduct} />
+           <input type="button" onClick={()=>submitProduct()} value={"submit"} />
         </div>
     );
 }

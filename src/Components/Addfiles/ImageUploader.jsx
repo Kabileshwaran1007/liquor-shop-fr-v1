@@ -9,7 +9,7 @@ const ImageUploader = () => {
     const formData = new FormData();
     formData.append("file", selectedImage);
 
-    fetch("http://localhost:8080/file/uploads", {
+    fetch("http://localhost:8080/file/upload", {
         method: 'POST',
         body: formData,
         dataType: "jsonp"
@@ -32,7 +32,7 @@ const ImageUploader = () => {
           />
           <br />
           <button onClick={() => setSelectedImage(null)}>Remove</button>
-          <button onClick={ handleFile()}>Upload</button>
+          <button onClick={()=> handleFile()}>Upload</button>
         </div>
       )}
       <br />
