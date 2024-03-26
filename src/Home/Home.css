@@ -1,5 +1,5 @@
 .Nav{
-    background-image: linear-gradient(to bottom, #101011, #9a9b9c, #bcbdbe, #d9dbe0, #e2e2e9);
+   background-color: rgb(64, 80, 80);
 }
 .me-auto{
     font-weight: 500;
@@ -9,6 +9,7 @@
 }
 .brand{
     font-family: URW Chancery L, cursive;
+
 }
 .back{
     background-image: url('../image/Background.jpg');
@@ -33,3 +34,12 @@
 .whiskey{
     margin-left: 65%;
 }
+.product{
+    text-decoration: none;
+    color: #101011;
+}
+.product p{
+    margin-left: 80%;
+    
+}
+

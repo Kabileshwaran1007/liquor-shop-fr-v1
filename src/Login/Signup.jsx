@@ -29,18 +29,18 @@ export const Signup = () => {
       headers: {
         'Content-Type': 'application/Json'
       },
-      body:JSON.stringify(data)
+      body: JSON.stringify(data)
     })
-    .then(response=>{
+      .then(response => {
 
-      if(response.status===200){
-      console.log("datareceived",response);
-      alert("singup seccessfully");
-      navigate("/login");
-      }
-    }).catch(error=>{
-      console.log("error",error);
-    })
+        if (response.status === 200) {
+          console.log("datareceived", response);
+          alert("singup seccessfully");
+          navigate("/login");
+        }
+      }).catch(error => {
+        console.log("error", error);
+      })
   }
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -58,7 +58,7 @@ export const Signup = () => {
         <br /><br />
 
         <label htmlFor="">E-mailId :</label>
-        <input type="text" name='email' value={formData.email} onChange={handleChange} required/>
+        <input type="text" name='email' value={formData.email} onChange={handleChange} required />
         <br /><br />
 
         <label htmlFor="">Password : </label>

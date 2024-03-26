@@ -19,7 +19,7 @@ function Navbar() {
                     <Nav.Link eventKey="/dashboard">Dashboard</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link eventKey="/admin/addsongs">AddSongs</Nav.Link>
+                    <Nav.Link eventKey="/admin/product">Add Product</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link eventKey="/user"> User </Nav.Link>
