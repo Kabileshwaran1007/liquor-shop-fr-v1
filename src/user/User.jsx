@@ -11,6 +11,7 @@ export const User = () => {
     const [text, setText] = useState({
         name: ""
     })
+    const [filterData, SetFilterData] = useState([]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -35,17 +36,15 @@ export const User = () => {
     const [posts, SetPosts] = useState();
 
     const fetchData = () => {
-        axios.get("http://localhost:8080/form/getdetails")
+        axios.get("http://localhost:8080/users")
             .then((res) => {
                 Object.keys(res.data).forEach(key => {
-                    // console.log(key, res.data[key]);
-                    // console.log("===img==" + res.data[key].image);
+                    
 
                 });
                 SetPosts(res.data);
-
-                // console.log("===Response==="+res.data.value);
-
+                SetFilterData(res.data)
+                
             })
             .catch((err) => {
                 console.log("error", err);
@@ -54,10 +53,14 @@ export const User = () => {
     useEffect(() => {
         fetchData();
     }, []);
+    //filter by name
+    const Filter = (event) => {
+        //  SetFilterData(posts.filter(f => f.username.toLowerCase().includes(event.target.value)))
+        SetFilterData(posts.filter(f => f.username?.toLowerCase().includes(event.target.value.toLowerCase())));
+    }
 
 
-
-    //model show
+   
 
     const [show, setShow] = useState(false);
 
@@ -71,7 +74,7 @@ export const User = () => {
                 <br />
                 <h3>User</h3>
                 <div>View The User List</div>
-                <input type="text" id="in" name='name' value={text.name} onChange={handleChange} placeholder='enter a user name' />
+                <input type="text" id="in" name='name' onChange={Filter} placeholder='Enter a user name' />
             </div>
             <Table striped bordered hover>
                 <thead>
@@ -84,9 +87,9 @@ export const User = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Array.isArray(posts) && posts.map((post) => (
-                        <tr key={post.id}>
-                            <td><b>{post.id}</b></td>
+                    {filterData.map((post, i) => (
+                        <tr key={i}>
+                            <td><b>{i + 1}</b></td>
                             <td><b>{post.username}</b></td>
                             <td><b>{post.email}</b></td>
                             <td><b>{post.password}</b></td>

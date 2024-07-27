@@ -7,8 +7,8 @@ export const Beer = () => {
   const [posts, setCategoryData] = useState();
 
   const fetchData = () => {
-    
-    axios.get("http://localhost:8080/product/findbycatogries/BEER")
+
+    axios.get("http://localhost:8080/product/BEER")
       .then((res) => {
         Object.keys(res.data).forEach(key => {
           console.log(key, res.data[key]);
@@ -30,16 +30,20 @@ export const Beer = () => {
     <div >
       <AllNavs />
       <div>
-        <h1 className='text-center'>Beer</h1>
         <div className="container">
           <div className='row'>
             {Array.isArray(posts) && posts.map((post) => (
-              <div className="card m-2 col-12 col-sm-6 col-md-4 col-lg-3 border-0" style={{height:"535px"}} key={post.id}>
-                <img src={`http://localhost:8080/uploads/${post.image}`} style={{ height: "300px", width: "100%" }} className="card-img-top" alt='beerimage' />
-                <div className='card-body'>
-                  <p>Name: <b style={{ fontSize: "bold" }}>{post.name}</b></p>
-                  <p>Description: <b>{post.description}</b></p>
-                  <p>Price: <b>{post.price}</b></p>
+              <div className="card m-2 col-12 col-sm-6 col-md-4 col-lg-3 border-0 shadow rounded" style={{ maxWidth: "269px", height: "550px" }} key={post.id}>
+                <img src={`http://localhost:8080/uploads/${post.image}`} style={{ height: "250px", objectFit: "cover" }} className="card-img-top rounded-top" alt='beerimage' />
+                <div className='card-body d-flex flex-column justify-content-between'>
+                  <div>
+                    <h5 className="card-title mb-3">{post.name}</h5>
+                    <p className="card-text">{post.description}</p>
+                  </div>
+                  <div>
+                    <p className="card-text"><small className="text-muted">Price: ${post.price}</small></p>
+                    {/* <button className="btn btn-primary">Add to Cart</button> */}
+                  </div>
                 </div>
               </div>
             ))}

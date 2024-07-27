@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { AllNavs } from './AllNavs';
 import { Footer } from '../Products/Footer';
 import './Home.css';
@@ -11,7 +12,9 @@ import { Link } from 'react-router-dom';
 
 export const Home = () => {
   return (
+  
     <div className='Home'>
+
       <AllNavs />
       <div className='container-fluid back'>
         <div className='row'>

@@ -1,70 +1,68 @@
-import { useState } from "react";
-import './Product.css'
-
+import React, { useState } from 'react';
+import axios from 'axios';
+import './Product.css';
 
 export const Product = () => {
     const [data, setData] = useState({
         valName: "",
         valPrice: "",
         valDescription: "",
-
     });
     const [selectedImage, setSelectedImage] = useState(null);
-    let uploadImage=null;
-    const [selectedValue, setSelectedValue] = useState();
+    const [selectedValue, setSelectedValue] = useState("Categorie"); // Set default value
+
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
-      };
-    const dataGiven = (e) => {
-        const { name, value } = e.target
-        setData({ ...data, [name]: value })
-    }
-    const submitProduct = () => {
-        const product = {
-            name: data.valName,
-            price: data.valPrice,
-            description: data.valDescription,
-            categories:selectedValue,
-            image:uploadImage
-        }
-        fetch("http://localhost:8080/product/set", {
-            headers: {
-                "Content-Type": "application/json"
-            },
-            method: "post",
-            body: JSON.stringify(product)
-        }).then(response => {
-            console.log("Data Received " + response)
-        })
+    };
 
+    const dataGiven = (e) => {
+        const { name, value } = e.target;
+        setData({ ...data, [name]: value });
     }
-    const handleFile = () => {
-        console.log("hello world")
+
+    const submitProduct = () => {
         const formData = new FormData();
-        formData.append("file", selectedImage);
-    
-        fetch("http://localhost:8080/file/upload", {
-            method: 'POST',
-            body: formData,
-            dataType: "jsonp"
+        formData.append("name", data.valName);
+        formData.append("price", data.valPrice);
+        formData.append("description", data.valDescription);
+        formData.append("category", selectedValue);
+        formData.append("image", selectedImage);
+
+        axios.post("http://localhost:8080/product/insert", formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
-        .then(response => response.text())
-        .then(text => {
-            uploadImage=text;
-            console.log(text)
+        .then(response => {
+            console.log("Response:", response.data);
+            alert("Product added successfully");
+            // Clear form data and selected image after successful submission
+            setData({
+                valName: "",
+                valPrice: "",
+                valDescription: "",
+            });
+            setSelectedValue("Categorie");
+            setSelectedImage(null);
         })
-      }
+        .catch(error => {
+            console.log("Error:", error);
+            alert("Error adding product");
+            // Handle error
+        });
+    };
+
     return (
         <div className="form-container">
             <h1>Add a Product</h1>
             <label>Name:</label>
-            <input type="text" name="valName" value={data.value} onChange={dataGiven} />
+            <input type="text" name="valName" value={data.valName} onChange={dataGiven} />
             <br />
             <label>Description:</label>
-            <input type="text" name="valDescription" value={data.value} onChange={dataGiven} />
+            <input type="text" name="valDescription" value={data.valDescription} onChange={dataGiven} />
             <br />
             <label>Price:</label>
-            <input type="text" name="valPrice" value={data.value} onChange={dataGiven} />
+            <input type="text" name="valPrice" value={data.valPrice} onChange={dataGiven} />
             <br />
             <label>Categories:
                 <select value={selectedValue} onChange={handleChange}>
@@ -75,30 +73,26 @@ export const Product = () => {
                 </select>
             </label>
             {selectedImage && (
-        <div>
-          <img
-            alt="not found"
-            width={"250px"}
-            src={URL.createObjectURL(selectedImage)}
-          />
-          <br />
-          <button onClick={() => setSelectedImage(null)}>Remove</button>
-          <button onClick={()=> handleFile()}>Upload</button>
-        </div>
-      )}
-      <br />
-      <br />
-      
-      <input
-        type="file"
-        name="myImage"
-        onChange={(event) => {
-          console.log(event.target.files[0]);
-          setSelectedImage(event.target.files[0]);
-        }}
-      />            <br />
+                <div>
+                    <img
+                        alt="not found"
+                        width={"250px"}
+                        src={URL.createObjectURL(selectedImage)}
+                    />
+                    <br />
+                    <button onClick={() => setSelectedImage(null)}>Remove</button>
+                </div>
+            )}
+            <br />
+            <input
+                type="file"
+                name="myImage"
+                onChange={(event) => {
+                    setSelectedImage(event.target.files[0]);
+                }}
+            />
+            <br />
             <input type="button" onClick={() => submitProduct()} value={"Submit"} />
         </div>
     );
 }
-

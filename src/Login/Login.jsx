@@ -1,81 +1,78 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import './Login.css'; // Assuming you have a Login.css file for styling
 
 export const Login = () => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        username: "",
-        password: ""
-    })
+        username: '',
+        password: '',
+    });
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value })
-        console.log(name, value);
-    }
-    const handleSubmit = (event) => {
+        setFormData({ ...formData, [name]: value });
+    };
 
+    const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(formData);
-        const Check = {
-            username: formData.username,
-            password: formData.password
+        const { username, password } = formData;
+
+        if (!username || !password) {
+            alert('Please fill in all fields.');
+            return;
         }
-        fetch("http://localhost:8080/form/login", {
+
+        console.log('Submitting form with username:', username);
+
+        fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/Json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(Check)
+            body: JSON.stringify({ username, password }),
         })
-            .then(response => {
-
-                if (response.status === 200) {
-                    console.log("datareceived", response);
-                    alert("singup seccessfully");
-                    navigate("/");
+            .then((response) => {
+                console.log('Response status:', response.status);
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`Server returned status: ${response.status}`);
                 }
-            }).catch(error => {
-                console.log("error", error);
             })
             .then((data) => {
-
-                if (data == !formData.username && data == !formData.password) {
-                    return alert("Enter valid details");
+                console.log('Login successful:', data);
+                const token = data.token;
+                localStorage.setItem('token', token);
+                if (data.user && data.user.role === 'admin') { // Check if data.user exists
+                    navigate(`/admin/${data.user.username}`);
                 } else {
-                    console.log("Data", data)
-                    setFormData(data)
+                    navigate('/');
                 }
             })
             .catch((error) => {
-                console.error("Error during fetch", error);
+                console.error('Error during fetch:', error);
+                alert('An error occurred. Please try again.');
             });
+    };
 
-    }
     return (
-        <div className="css" >
-
-            <div className="outer">
-                <h1>Login Form</h1>
-                {/* <h4>login in to get notified</h4> */}
-                <div >
-                    <form onSubmit={handleSubmit}>
-
-                        <p>Username : <input type="text" placeholder="Type your username" name="username" value={formData.username} onChange={handleChange} /></p>
-
-                        <p>Password : <input type="password" placeholder="Type your Password" name="password" value={formData.password} onChange={handleChange} /></p>
-
-                        <p>Create new account <Link to="/signup">Create</Link></p>
-
-                        <input type="submit" value="Login" />
+        <div>
+            <div className="login-page">
+                <div className="login-container">
+                    <form onSubmit={handleSubmit} className="login-form">
+                        <h2 className="login-heading mb-3">Log In</h2>
+                        <div className="login-underline mb-4"></div>
+                        <input type="text" className="login-input mb-3" placeholder="Username" name="username" value={formData.username} onChange={handleChange} />
+                        <input type="password" className="login-input mb-3" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
+                        <p className="login-message mb-4"> Don't have an account? <Link className="login-link" to="/signup">Signup</Link></p>
+                        <input type="submit" className="login-btn" value="Log in" />
                     </form>
                 </div>
             </div>
         </div>
+    );
+};
 
-
-    )
-}
+export default Login;
